@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grand Failure Auto — Trailer 29/11</title>
+<meta name="description" content="Trailer coming 29/11.">
+<meta name="theme-color" content="#070707">
+<meta property="og:title" content="Grand Failure Auto — Trailer 29/11">
+<meta property="og:image" content="poster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ CONFIG ============ */
+  :root{
+    --bg:#070707;
+    --fg:#f5f2ea;
+    --muted:#a19d95;
+    --gold-hi:#fbe9a6;
+    --gold:#e2b53e;
+    --gold-lo:#9c6f10;
+    --neon:#ff4fa3;
+    --header-h:92px;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    min-height:100svh;
+    display:flex;flex-direction:column;
+  }
+
+  /* ============ SPLIT CITY BACKGROUND ============ */
+  #scene{
+    position:fixed;inset:0;width:100%;height:100%;z-index:-3;
+    opacity:0;animation:sceneIn 2.2s var(--ease) .1s forwards;
+  }
+  .shade{
+    position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(ellipse 42% 60% at 50% 46%, rgba(6,5,10,.72) 0%, rgba(6,5,10,.35) 65%, rgba(6,5,10,.15) 100%),
+      linear-gradient(to bottom, rgba(6,5,10,.92) 0%, rgba(6,5,10,.25) 16%, rgba(6,5,10,0) 45%, rgba(6,5,10,.55) 78%, rgba(6,5,10,.96) 100%);
+  }
+  .grain{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* scene motion */
+  .drift-a{animation:drift 60s linear infinite alternate}
+  .drift-b{animation:drift 80s linear infinite alternate-reverse}
+  .shimmer{animation:shimmer 3.5s ease-in-out infinite}
+  .flicker{animation:flicker 4s steps(1) infinite}
+  .heli{animation:heli 38s linear infinite}
+
+  /* ============ TOP BAR ============ */
+  header{
+    height:var(--header-h);
+    padding:0 clamp(18px,4vw,44px);
+    padding-top:env(safe-area-inset-top);
+    display:flex;align-items:center;justify-content:space-between;
+    opacity:0;transform:translateY(-12px);
+    animation:fadeDown .9s var(--ease) .1s forwards;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+  .logo{display:block;height:66px;width:auto;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6));transition:transform .4s var(--ease)}
+  .brand:hover .logo{transform:scale(1.04)}
+  .wordmark{font-weight:800;font-size:13px;letter-spacing:.32em;text-transform:uppercase}
+  .wordmark.fallback{display:none}
+  .brand.nologo .logo{display:none}
+  .brand.nologo .wordmark.fallback{display:inline}
+  .status{
+    display:flex;align-items:center;gap:10px;
+    font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:pulse 2s ease-in-out infinite}
+
+  /* ============ STAGE ============ */
+  main{
+    flex:1;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:clamp(14px,2.6vh,28px);
+    padding:6px 16px calc(clamp(20px,4vh,40px) + env(safe-area-inset-bottom));
+  }
+
+  .stage{perspective:1400px}
+  .frame{
+    --rx:0deg;--ry:0deg;--gx:50%;--gy:30%;
+    position:relative;
+    width:clamp(220px, min(90vw, calc((100svh - var(--header-h) - 300px) * .7467)), 600px);
+    aspect-ratio:896/1200;
+    border-radius:4px;
+    overflow:hidden;
+    background:#111;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.1),
+      0 30px 60px -20px rgba(0,0,0,.9),
+      0 60px 120px -40px rgba(0,0,0,.85);
+    transform:rotateX(var(--rx)) rotateY(var(--ry));
+    transition:transform .5s var(--ease), box-shadow .5s var(--ease);
+    opacity:0;
+    animation:posterIn 1.4s var(--ease) .35s forwards;
+    will-change:transform;
+  }
+  .frame img{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+  .frame::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.14), transparent 45%);
+    opacity:0;transition:opacity .4s ease;
+  }
+  .frame.tilting::after{opacity:1}
+  .frame.tilting{box-shadow:0 0 0 1px rgba(255,255,255,.16),0 40px 80px -20px rgba(0,0,0,.95),0 80px 140px -40px rgba(0,0,0,.85)}
+
+  .missing-note{
+    position:absolute;inset:0;display:none;
+    flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;
+    border:1px dashed rgba(255,255,255,.2);border-radius:4px;color:var(--muted);
+    font-size:13px;letter-spacing:.04em;line-height:1.6;
+  }
+  .missing-note b{color:var(--fg);font-weight:700}
+  .frame.missing img{display:none}
+  .frame.missing .missing-note{display:flex}
+
+  /* ============ ANNOUNCEMENT ============ */
+  .announce{
+    font-family:Anton,"Bebas Neue","Oswald",Impact,"Arial Narrow Bold",sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(2rem,5vw,4rem);
+    line-height:.95;
+    letter-spacing:.012em;
+    text-align:center;
+    display:flex;flex-wrap:wrap;justify-content:center;gap:0 .28em;
+    text-shadow:0 4px 30px rgba(0,0,0,.6);
+  }
+  .announce .line{display:inline-block;overflow:hidden;padding-bottom:.04em}
+  .announce .line > span{display:inline-block;transform:translateY(105%);animation:rise 1s var(--ease) forwards}
+  .announce .l1 > span{animation-delay:1.05s;color:var(--fg)}
+  .announce .l2 > span{
+    text-shadow:none;
+    background:linear-gradient(100deg,var(--gold-lo) 0%,var(--gold) 28%,var(--gold-hi) 45%,#fff8df 50%,var(--gold-hi) 55%,var(--gold) 72%,var(--gold-lo) 100%);
+    background-size:250% 100%;background-position:100% 0;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:rise 1s var(--ease) 1.2s forwards, shine 2.2s ease-in-out 2.1s forwards;
+  }
+
+  /* ============ COUNTDOWN ============ */
+  .countdown{
+    display:flex;align-items:flex-start;justify-content:center;gap:clamp(6px,1.4vw,14px);
+    opacity:0;transform:translateY(14px);
+    animation:fadeUp 1s var(--ease) 1.5s forwards;
+  }
+  .unit{
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    min-width:clamp(58px,8vw,84px);
+    padding:clamp(8px,1.2vh,12px) clamp(8px,1vw,12px) clamp(7px,1vh,10px);
+    background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:6px;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 30px -12px rgba(0,0,0,.8);
+  }
+  .num{
+    font-family:Anton,Impact,"Arial Narrow Bold",sans-serif;
+    font-size:clamp(1.7rem,3.6vw,2.8rem);line-height:1;
+    font-variant-numeric:tabular-nums;letter-spacing:.02em;
+    color:var(--fg);
+  }
+  .unit.sec .num{color:var(--gold)}
+  .num.tick{animation:tick .45s var(--ease)}
+  .lbl{font-size:clamp(9px,.8vw,10px);font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);padding-left:.3em}
+  .sep{
+    font-family:Anton,Impact,sans-serif;font-size:clamp(1.4rem,3vw,2.3rem);line-height:1;
+    color:rgba(255,255,255,.25);padding-top:clamp(10px,1.4vh,14px);
+  }
+  .countdown.done .unit,.countdown.done .sep{display:none}
+  .out-now{
+    display:none;
+    font-family:Anton,Impact,sans-serif;text-transform:uppercase;letter-spacing:.06em;
+    font-size:clamp(1.2rem,2.4vw,1.8rem);
+    padding:10px 22px;border:1px solid var(--gold);border-radius:6px;color:var(--gold);
+    box-shadow:0 0 30px rgba(226,181,62,.25);
+  }
+  .countdown.done .out-now{display:block}
+
+  /* ============ KEYFRAMES ============ */
+  @keyframes fadeDown{to{opacity:1;transform:none}}
+  @keyframes fadeUp{to{opacity:1;transform:none}}
+  @keyframes sceneIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:none}}
+  @keyframes posterIn{
+    from{opacity:0;transform:translateY(36px) scale(.96);filter:blur(10px)}
+    to{opacity:1;transform:rotateX(var(--rx)) rotateY(var(--ry));filter:none}
+  }
+  @keyframes rise{to{transform:none}}
+  @keyframes shine{from{background-position:100% 0}to{background-position:0 0}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes tick{from{transform:translateY(-30%);opacity:0}to{transform:none;opacity:1}}
+  @keyframes drift{from{transform:translateX(-40px)}to{transform:translateX(40px)}}
+  @keyframes shimmer{0%,100%{opacity:.15}50%{opacity:.75}}
+  @keyframes flicker{0%,100%{opacity:1}37%{opacity:.25}39%{opacity:1}71%{opacity:.4}72%{opacity:1}}
+  @keyframes heli{from{transform:translate(1700px,0)}to{transform:translate(-200px,40px)}}
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:600px){
+    :root{--header-h:68px}
+    .logo{height:48px}
+    .wordmark{font-size:11px;letter-spacing:.26em}
+    .status{font-size:10px;letter-spacing:.22em}
+    .frame{width:clamp(200px, min(86vw, calc((100svh - var(--header-h) - 250px) * .7467)), 520px)}
+    .unit{min-width:62px}
+    .sep{display:none}
+  }
+  @media (max-height:560px) and (orientation:landscape){
+    main{justify-content:flex-start;padding-top:16px}
+    .frame{width:min(60vw,320px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+  <!-- Background: left = warm sunset city, right = neon dusk coast. Drawn by script below. -->
+  <svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <!-- LEFT: golden-hour sunset -->
+      <linearGradient id="skyL" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#140c22"/>
+        <stop offset=".38" stop-color="#5a2416"/>
+        <stop offset=".66" stop-color="#d9661f"/>
+        <stop offset=".8" stop-color="#ffb347"/>
+        <stop offset=".86" stop-color="#ffe0a0"/>
+      </linearGradient>
+      <radialGradient id="sunL" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#fff3c4"/>
+        <stop offset=".45" stop-color="#ffd166"/>
+        <stop offset="1" stop-color="#ff8c2a" stop-opacity="0"/>
+      </radialGradient>
+      <!-- RIGHT: neon dusk -->
+      <linearGradient id="skyR" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0a0a26"/>
+        <stop offset=".36" stop-color="#3b1767"/>
+        <stop offset=".62" stop-color="#b52a83"/>
+        <stop offset=".78" stop-color="#ff5c8a"/>
+        <stop offset=".86" stop-color="#ffb08a"/>
+      </linearGradient>
+      <linearGradient id="sunR" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe28a"/>
+        <stop offset=".5" stop-color="#ff7a59"/>
+        <stop offset="1" stop-color="#ff2e88"/>
+      </linearGradient>
+      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5a1a5e"/>
+        <stop offset="1" stop-color="#07061a"/>
+      </linearGradient>
+      <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2a1208"/>
+        <stop offset="1" stop-color="#070403"/>
+      </linearGradient>
+      <mask id="sunStripes">
+        <rect x="0" y="0" width="1600" height="900" fill="#fff"/>
+        <g id="stripeHoles" fill="#000"></g>
+      </mask>
+      <filter id="blur30"><feGaussianBlur stdDeviation="30"/></filter>
+      <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <clipPath id="clipL"><polygon points="0,0 870,0 730,900 0,900"/></clipPath>
+      <clipPath id="clipR"><polygon points="870,0 1600,0 1600,900 730,900"/></clipPath>
+    </defs>
+
+    <g clip-path="url(#clipL)">
+      <rect width="1600" height="770" fill="url(#skyL)"/>
+      <circle cx="330" cy="590" r="260" fill="url(#sunL)" filter="url(#blur30)" opacity=".9"/>
+      <circle cx="330" cy="590" r="85" fill="#ffe9a8"/>
+      <g id="cloudsL" class="drift-a"></g>
+      <g id="cityL"></g>
+      <path d="M0 770 L1600 770 L1600 900 L0 900Z" fill="url(#ground)"/>
+      <g id="roadL"></g>
+      <g id="palmsL"></g>
+    </g>
+
+    <g clip-path="url(#clipR)">
+      <rect width="1600" height="770" fill="url(#skyR)"/>
+      <circle cx="1220" cy="690" r="230" fill="#ff4f9a" filter="url(#blur30)" opacity=".5"/>
+      <circle cx="1220" cy="690" r="135" fill="url(#sunR)" mask="url(#sunStripes)"/>
+      <g id="cloudsR" class="drift-b"></g>
+      <g class="heli"><g id="heli"></g></g>
+      <g id="cityR"></g>
+      <rect y="770" width="1600" height="130" fill="url(#sea)"/>
+      <g id="waterR"></g>
+      <g id="palmsR"></g>
+    </g>
+
+    <!-- comic-panel style divider -->
+    <line x1="870" y1="0" x2="730" y2="900" stroke="#050505" stroke-width="12"/>
+    <line x1="870" y1="0" x2="730" y2="900" stroke="#fff" stroke-opacity=".12" stroke-width="1.5"/>
+  </svg>
+  <div class="shade" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="#" aria-label="Grand Failure Auto">
+      <img class="logo" src="logo.png" alt="Grand Failure Auto" onerror="this.closest('.brand').classList.add('nologo')">
+      <span class="wordmark fallback">Grand Failure Auto</span>
+    </a>
+    <div class="status"><span class="dot"></span>Coming Soon</div>
+  </header>
+
+  <main>
+    <div class="stage">
+      <figure class="frame" id="frame">
+        <img id="poster" src="image.webp" alt="Grand Failure Auto — official poster" width="896" height="1200" decoding="async" fetchpriority="high">
+        <figcaption class="missing-note">
+          <b>Poster not found</b>
+          Put your image next to this file<br>and name it <b>poster.png</b>
+        </figcaption>
+      </figure>
+    </div>
+
+    <h1 class="announce" aria-label="Trailer coming 29/11">
+      <span class="line l1"><span>Trailer coming</span></span>
+      <span class="line l2"><span>29/11</span></span>
+    </h1>
+
+    <div class="countdown" id="countdown" role="timer" aria-label="Countdown to trailer release">
+      <div class="unit"><span class="num" data-u="d">00</span><span class="lbl">Days</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" data-u="h">00</span><span class="lbl">Hrs</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" data-u="m">00</span><span class="lbl">Min</span></div>
+      <span class="sep">:</span>
+      <div class="unit sec"><span class="num" data-u="s">00</span><span class="lbl">Sec</span></div>
+      <div class="out-now">Trailer out now</div>
+    </div>
+  </main>
+
+<script>
+/* ================= COUNTDOWN =================
+   Target: 29/11/2026 at 00:00:01, Tunisia / Paris time (UTC+1).
+   Change the date here if needed. */
+const TARGET = new Date('2026-11-29T00:00:01+01:00').getTime();
+
+(() => {
+  const box = document.getElementById('countdown');
+  const els = {}; box.querySelectorAll('.num').forEach(n => els[n.dataset.u] = n);
+  const pad = n => String(n).padStart(2, '0');
+  let timer;
+  const set = (k, v) => {
+    if (els[k].textContent !== v) {
+      els[k].textContent = v;
+      els[k].classList.remove('tick'); void els[k].offsetWidth; els[k].classList.add('tick');
+    }
+  };
+  const update = () => {
+    let diff = Math.max(0, Math.floor((TARGET - Date.now()) / 1000));
+    if (diff === 0) { box.classList.add('done'); clearInterval(timer); return; }
+    const d = Math.floor(diff / 86400); diff %= 86400;
+    const h = Math.floor(diff / 3600);  diff %= 3600;
+    const m = Math.floor(diff / 60);
+    const s = diff % 60;
+    set('d', pad(d)); set('h', pad(h)); set('m', pad(m)); set('s', pad(s));
+  };
+  update();
+  timer = setInterval(update, 1000);
+})();
+
+/* ================= SCENE BUILDER ================= */
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  // seeded random so the skyline is identical on every visit
+  let seed = 7;
+  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const HORIZON = 770;
+
+  /* --- skylines --- */
+  function skyline(group, x0, x1, center, opts) {
+    // back layer (hazy)
+    let x = x0;
+    while (x < x1) {
+      const w = 26 + rnd() * 50;
+      const dist = Math.abs(x - center) / 500;
+      const h = (60 + rnd() * 140) * Math.max(.35, 1.3 - dist);
+      el('rect', { x, y: HORIZON - h, width: w + 1, height: h, fill: opts.back }, group);
+      x += w;
+    }
+    // front layer with windows
+    x = x0;
+    while (x < x1) {
+      const w = 34 + rnd() * 70;
+      const dist = Math.abs(x + w / 2 - center) / 420;
+      const tall = Math.max(.25, 1.25 - dist);
+      const h = (50 + rnd() * 220) * tall + (rnd() < .12 ? 120 * tall : 0);
+      const y = HORIZON - h;
+      el('rect', { x, y, width: w + 1, height: h, fill: opts.front }, group);
+      if (rnd() < .25 && h > 160) { // antenna
+        el('rect', { x: x + w / 2 - 1.5, y: y - 40, width: 3, height: 40, fill: opts.front }, group);
+        el('circle', { cx: x + w / 2, cy: y - 42, r: 2.5, fill: opts.beacon, class: 'flicker' }, group);
+      }
+      // windows
+      const cols = Math.floor((w - 8) / 9), rows = Math.floor((h - 12) / 12);
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        if (rnd() > opts.lit) continue;
+        const color = opts.windows[Math.floor(rnd() * opts.windows.length)];
+        el('rect', {
+          x: x + 6 + c * 9, y: y + 8 + r * 12, width: 4, height: 6, fill: color,
+          opacity: (.35 + rnd() * .55).toFixed(2),
+          ...(opts.flicker && rnd() < .05 ? { class: 'flicker' } : {})
+        }, group);
+      }
+      x += w + (rnd() < .2 ? 8 : 0);
+    }
+  }
+  skyline($('cityL'), 0, 900, 430, {
+    back: '#4a1e14', front: '#1a0b07', beacon: '#ff6a3d',
+    windows: ['#ffcf7a', '#ffb347', '#ffe6b0'], lit: .12, flicker: false
+  });
+  skyline($('cityR'), 700, 1600, 1260, {
+    back: '#3a1450', front: '#0e0820', beacon: '#ff3d9a',
+    windows: ['#ff4fa3', '#39e6ff', '#b388ff', '#ffd6f0'], lit: .16, flicker: true
+  });
+
+  /* --- clouds (thin streaks) --- */
+  function clouds(group, x0, x1, colors) {
+    for (let i = 0; i < 9; i++) {
+      const cx = x0 + rnd() * (x1 - x0), cy = 280 + rnd() * 360;
+      el('ellipse', { cx, cy, rx: 80 + rnd() * 220, ry: 4 + rnd() * 9,
+        fill: colors[i % colors.length], opacity: (.25 + rnd() * .35).toFixed(2) }, group);
+    }
+  }
+  clouds($('cloudsL'), -100, 950, ['#ff9a4a', '#ffcf8a', '#c2502a']);
+  clouds($('cloudsR'), 700, 1700, ['#ff7ac0', '#8a4dff', '#ff9fb0']);
+
+  /* --- left: road with perspective --- */
+  const road = $('roadL');
+  el('polygon', { points: '380,770 470,770 640,900 120,900', fill: '#120804' }, road);
+  for (let i = 0; i < 5; i++) {
+    const t0 = i / 5, t1 = t0 + .09;
+    const y0 = 770 + 130 * t0 * t0, y1 = 770 + 130 * t1 * t1;
+    const w0 = 1 + 6 * t0, w1 = 1 + 6 * t1;
+    el('polygon', { points: `${425 - w0},${y0} ${425 + w0},${y0} ${425 + w1 * 1.3},${y1} ${425 - w1 * 1.3},${y1}`, fill: '#ffb347', opacity: .55 }, road);
+  }
+
+  /* --- right: neon sun stripes + water reflections --- */
+  const holes = $('stripeHoles');
+  for (let i = 0; i < 7; i++) {
+    const y = 690 + i * 18, hgt = 2 + i * 1.6;
+    el('rect', { x: 1050, y, width: 340, height: hgt }, holes);
+  }
+  const water = $('waterR');
+  for (let i = 0; i < 16; i++) {
+    const y = 778 + i * 7 + rnd() * 3;
+    const w = 40 + rnd() * (160 - i * 6);
+    const x = 1220 - w / 2 + (rnd() - .5) * 60;
+    el('rect', { x, y, width: w, height: 2, fill: i % 3 ? '#ff7aa8' : '#ffd08a',
+      class: 'shimmer', style: `animation-delay:${(rnd() * 3).toFixed(2)}s` }, water);
+  }
+  for (let i = 0; i < 10; i++) { // neon city reflections
+    const x = 760 + rnd() * 820, y = 780 + rnd() * 100;
+    el('rect', { x, y, width: 10 + rnd() * 50, height: 1.5, fill: rnd() < .5 ? '#39e6ff' : '#ff4fa3',
+      class: 'shimmer', style: `animation-delay:${(rnd() * 3).toFixed(2)}s` }, water);
+  }
+
+  /* --- palm silhouettes --- */
+  function palm(group, x, baseY, h, lean, s, color) {
+    const topX = x + lean, topY = baseY - h;
+    const cx = x + lean * .2, cy = baseY - h * .55;
+    // tapered trunk
+    const w0 = 9 * s, w1 = 4 * s;
+    el('path', { d: `M${x - w0} ${baseY} Q${cx - w0 * .7} ${cy} ${topX - w1} ${topY} L${topX + w1} ${topY} Q${cx + w0 * .7} ${cy} ${x + w0} ${baseY}Z`, fill: color }, group);
+    // fronds
+    const angles = [-170, -145, -120, -95, -70, -40, -12, 10, 165, 190];
+    angles.forEach(a => {
+      const r = a * Math.PI / 180, L = (90 + rnd() * 40) * s;
+      const ex = topX + Math.cos(r) * L, ey = topY + Math.sin(r) * L * .55 + L * .55;
+      const mx = topX + Math.cos(r) * L * .5, my = topY + Math.sin(r) * L * .5 - L * .18;
+      const nx = -(ey - topY), ny = ex - topX, nl = Math.hypot(nx, ny) || 1;
+      const k = 9 * s;
+      el('path', { d: `M${topX} ${topY} Q${mx + nx / nl * k} ${my + ny / nl * k} ${ex} ${ey} Q${mx - nx / nl * k * .4} ${my - ny / nl * k * .4} ${topX} ${topY}Z`, fill: color }, group);
+    });
+    el('circle', { cx: topX, cy: topY + 3 * s, r: 7 * s, fill: color }, group);
+  }
+  const pl = $('palmsL'), pr = $('palmsR');
+  palm(pl, 70, 900, 430, 40, 1.25, '#070302');
+  palm(pl, 190, 900, 330, -25, 1, '#0a0503');
+  palm(pl, 640, 900, 250, 20, .8, '#0c0604');
+  palm(pr, 1530, 900, 440, -45, 1.25, '#05030d');
+  palm(pr, 1400, 900, 320, 30, 1, '#07041a');
+  palm(pr, 930, 900, 230, -15, .75, '#0a0620');
+
+  /* --- tiny helicopter silhouette over the neon side --- */
+  const heli = $('heli');
+  el('ellipse', { cx: 0, cy: 260, rx: 14, ry: 6, fill: '#08051a' }, heli);
+  el('rect', { x: 10, y: 258, width: 26, height: 2.5, fill: '#08051a' }, heli);
+  el('rect', { x: -22, y: 250, width: 44, height: 1.5, fill: '#08051a' }, heli);
+  el('rect', { x: -1, y: 251, width: 2, height: 4, fill: '#08051a' }, heli);
+  el('circle', { cx: -6, cy: 266, r: 1.8, fill: '#ff3d3d', class: 'flicker' }, heli);
+})();
+
+/* ================= POSTER ================= */
+(() => {
+  const frame = document.getElementById('frame');
+  const img = document.getElementById('poster');
+  const markMissing = () => frame.classList.add('missing');
+  img.addEventListener('error', markMissing);
+  if (img.complete && img.naturalWidth === 0) markMissing();
+
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (!fine || still) return;
+
+  const MAX = 5;
+  let raf = null;
+  frame.addEventListener('pointermove', e => {
+    const r = frame.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      frame.classList.add('tilting');
+      frame.style.setProperty('--ry', ((x - .5) * 2 * MAX).toFixed(2) + 'deg');
+      frame.style.setProperty('--rx', ((.5 - y) * 2 * MAX).toFixed(2) + 'deg');
+      frame.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+      frame.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+    });
+  });
+  frame.addEventListener('pointerleave', () => {
+    cancelAnimationFrame(raf);
+    frame.classList.remove('tilting');
+    frame.style.setProperty('--rx', '0deg');
+    frame.style.setProperty('--ry', '0deg');
+  });
+  frame.addEventListener('animationend', () => { frame.style.animation = 'none'; frame.style.opacity = 1; }, { once: true });
+})();
+</script>
+</body>
+</html>
